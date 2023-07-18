@@ -16,7 +16,7 @@ namespace EfCoreExamples.Loggers.LogWithLoggerFactory
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //HACK there are serveral type of loggers, this is just one of them, check the nugets that start with the name Microsoft.Extensions.Logging
+            //HACK there are several type of loggers, this is just one of them, check the nugets that start with the name Microsoft.Extensions.Logging
             //For example, Microsoft.Extensions.Logging.Console and Microsoft.Extensions.Logging.Debug
             var loggerFactory = LoggerFactory.Create(builder =>
             {

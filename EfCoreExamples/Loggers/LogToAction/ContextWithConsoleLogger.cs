@@ -11,14 +11,16 @@ namespace EfCoreExamples.Loggers.LogToAction
 {
     public class ContextWithConsoleLogger : DbContext
     {
-        //public static readonly ILoggerFactory MyLoggerFactory
-        //    = LoggerFactory.Create(builder => { builder.AddConsole(); });
-
+      
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                //.UseLoggerFactory(MyLoggerFactory)
-                .LogTo((message) => { Debug.WriteLine(message); })
+                //HACK log to any action that accepts a string message as parameter
+
+                .LogTo((message) =>
+                {
+                    Debug.WriteLine(message);
+                })
                 .UseSqlServer(
                     @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesEFLogging;Trusted_Connection=True;");
         }
