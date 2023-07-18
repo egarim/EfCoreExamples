@@ -12,7 +12,7 @@ namespace EfCoreExamples.ChangeNotification.Implicit
         {
         }
 
-        [Test]
+        [Test]//Expected to fail, proxies will add event trigger and interface implementation
         public void TestWithProxies()
         {
             using (var context = new ContextWithImplicitChangeNotifications())
@@ -43,7 +43,7 @@ namespace EfCoreExamples.ChangeNotification.Implicit
             }
             Assert.Pass();
         }
-        [Test]
+        [Test]//Expected to fail,no proxies or event trigger will be added
         public void TestWithoutProxies()
         {
             using (var context = new ContextWithImplicitChangeNotifications())
@@ -64,7 +64,7 @@ namespace EfCoreExamples.ChangeNotification.Implicit
                 context.SimplePersons.Add(entity);
                 context.SaveChanges();
             }
-            Assert.Pass();
+           
         }
     }
 }

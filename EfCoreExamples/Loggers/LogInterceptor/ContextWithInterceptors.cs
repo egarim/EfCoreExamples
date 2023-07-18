@@ -17,6 +17,7 @@ namespace EfCoreExamples.Loggers.LogInterceptor
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
+                //HACK adding interceptors that write the queries to the debug console
                 .AddInterceptors(new QueryInterceptor())
                 .UseSqlServer(
                     @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesLogInterceptor;Trusted_Connection=True;");

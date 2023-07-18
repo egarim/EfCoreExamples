@@ -8,6 +8,7 @@ namespace EfCoreExamples.Loggers.LogInterceptor
 {
     public class QueryInterceptor : DbCommandInterceptor
     {
+        //HACK this will log the select statements
         public override InterceptionResult<DbDataReader> ReaderExecuting(
             DbCommand command,
             CommandEventData eventData,
@@ -17,6 +18,8 @@ namespace EfCoreExamples.Loggers.LogInterceptor
 
             return result;
         }
+
+        //HACK this will log the INSERT,UPDATE,DELETE and DDL statements
         public override InterceptionResult<int> NonQueryExecuting(
                                                 DbCommand command,
                                                 CommandEventData eventData,

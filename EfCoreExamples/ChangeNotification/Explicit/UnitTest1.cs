@@ -12,7 +12,7 @@ namespace EfCoreExamples.ChangeNotification.Explicit
         {
         }
 
-        [Test]//Expected to fail
+        [Test]//Expected to fail, proxies will not add event trigger
         public void TestWithProxiesAndExplicitImplementationWithoutEventTrigger()
         {
             bool DidTriggerChangeNotification = false;
