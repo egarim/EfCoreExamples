@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Linq;
 
-namespace EfCoreExamples.SoftDelete
+namespace EfCoreExamples.SoftDelete.WithEntityConfiguration
 {
     public class SimplePersonConfiguration : IEntityTypeConfiguration<SimplePerson>
     {

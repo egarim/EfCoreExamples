@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EfCoreExamples.SoftDelete
+namespace EfCoreExamples.SoftDelete.WithEntityConfiguration
 {
-    public class ContextSoftDelete : DbContext
+    public class ContextSoftDeleteWithEntityConfiguration : DbContext
     {
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             UpdateSoftDeleteStatuses();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
@@ -24,8 +24,8 @@ namespace EfCoreExamples.SoftDelete
         protected virtual void UpdateSoftDeleteStatuses()
         {
             foreach (var entry in ChangeTracker.Entries())
-            {    
-               
+            {
+
                 if (entry.Members.Any(x => x.Metadata.Name == "IsDeleted"))
                 {
                     switch (entry.State)
@@ -52,7 +52,7 @@ namespace EfCoreExamples.SoftDelete
                     Debug.WriteLine(message);
                 })
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesContextSoftDelete;Trusted_Connection=True;");
+                    @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesContextSoftDeleteWithEntityConfiguration;Trusted_Connection=True;");
         }
         public DbSet<SimplePerson> SimplePersons { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,6 +63,7 @@ namespace EfCoreExamples.SoftDelete
             //modelBuilder.Entity<SimplePerson>()
             //    .HasQueryFilter(user => !user.IsDeleted);
 
+            //HACK using configuration class
             modelBuilder.ApplyConfiguration(new SimplePersonConfiguration());
 
 
