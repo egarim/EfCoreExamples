@@ -11,7 +11,7 @@ namespace EfCoreExamples.ChangeNotification.ExplicitOldAndNewValue
     {
 
         
-        public virtual int Id
+        public  int Id
         {
             get => id;
             set
@@ -27,7 +27,7 @@ namespace EfCoreExamples.ChangeNotification.ExplicitOldAndNewValue
         string name;
         int id;
 
-        public virtual string Name
+        public string Name
         {
             get => name;
             set => SetPropertyValue<string>(nameof(Name), ref name, value);
@@ -45,7 +45,7 @@ namespace EfCoreExamples.ChangeNotification.ExplicitOldAndNewValue
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
-        public virtual string LastName
+        public string LastName
         {
             get => lastName;
             set => SetPropertyValue<string>(nameof(LastName), ref lastName, value);

@@ -17,8 +17,8 @@ namespace EfCoreExamples.ChangeNotification.ExplicitOldAndNewValue
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                //HACK tracking proxies https://learn.microsoft.com/en-us/ef/core/change-tracking/change-detection#change-tracking-proxies
-                .UseChangeTrackingProxies()
+                //HACK tracking proxies not required for custom change notifications
+                //.UseChangeTrackingProxies()
                 .UseSqlServer(
                     @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesContextWithExplicitChangeNotifications;Trusted_Connection=True;");
         }
