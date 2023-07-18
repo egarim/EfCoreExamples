@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EfCoreExamples.ChangeNotification.Implicit
+namespace EfCoreExamples.ChangeNotification.ExplicitOldAndNewValue
 {
-    public class ContextWithImplicitChangeNotifications : DbContext
+    public class ContextWithExplicitChangeNotifications : DbContext
     {
         //public static readonly ILoggerFactory MyLoggerFactory
         //    = LoggerFactory.Create(builder => { builder.AddConsole(); });
@@ -20,11 +20,9 @@ namespace EfCoreExamples.ChangeNotification.Implicit
                 //HACK tracking proxies https://learn.microsoft.com/en-us/ef/core/change-tracking/change-detection#change-tracking-proxies
                 .UseChangeTrackingProxies()
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesImplicitChangeNotifications;Trusted_Connection=True;");
+                    @"Server=(localdb)\mssqllocaldb;Database=EfCoreExamplesContextWithExplicitChangeNotifications;Trusted_Connection=True;");
         }
-        public DbSet<SimplePerson> SimplePersons { get; set; }
-
-        
-
+       
+        public DbSet<SimplePersonWithCustomNotificationTrigger> SimplePersonsWithNotificationTrigger { get; set; }
     }
 }

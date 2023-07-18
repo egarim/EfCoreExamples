@@ -1,5 +1,4 @@
-﻿using EfCoreExamples.ChangeNotification.Explicit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
