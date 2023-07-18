@@ -12,8 +12,8 @@ namespace EfCoreExamples.ChangeNotification.Explicit
         {
         }
 
-        [Test]
-        public void TestWithProxiesAndExplicitImplementation()
+        [Test]//Expected to fail
+        public void TestWithProxiesAndExplicitImplementationWithoutEventTrigger()
         {
             bool DidTriggerChangeNotification = false;
             using (var context = new ContextWithExplicitChangeNotifications())
@@ -46,8 +46,8 @@ namespace EfCoreExamples.ChangeNotification.Explicit
             }
             Assert.IsTrue(DidTriggerChangeNotification);
         }
-        [Test]
-        public void TestWithProxiesAndExplicitImplementationWithEventTrigger()
+        [Test]//Expected to pass
+        public void TestWithExplicitImplementationAndEventTrigger()
         {
             bool DidTriggerChangeNotification = false;
             using (var context = new ContextWithExplicitChangeNotifications())

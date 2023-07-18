@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 namespace EfCoreExamples.ChangeNotification.Explicit
 {
     //HACK virtual properties are required for proxies with change notification
-    public class SimplePerson: INotifyPropertyChanged
+    public class SimplePerson: INotifyPropertyChanged, INotifyPropertyChanging
+
     {
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual string LastName { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangingEventHandler? PropertyChanging;
     }
 }
