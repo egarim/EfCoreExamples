@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace EfCoreExamples.ChangeNotification.Implicit
+namespace EfCoreExamples.ChangeNotification.Explicit
 {
     public class Tests
     {
@@ -13,9 +13,10 @@ namespace EfCoreExamples.ChangeNotification.Implicit
         }
 
         [Test]
-        public void TestWithProxies()
+        public void TestWithProxiesAndExplicitImplementation()
         {
-            using (var context = new ContextWithImplicitChangeNotifications())
+            bool DidTriggerChangeNotification = false;
+            using (var context = new ContextWithExplicitChangeNotifications())
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
@@ -24,9 +25,11 @@ namespace EfCoreExamples.ChangeNotification.Implicit
                 if (entity is INotifyPropertyChanged npc)
                 {
                     Assert.IsTrue(typeof(INotifyPropertyChanged).IsAssignableFrom(npc.GetType()));
-                  
+                   
+                    //this will not trigger because the event is not raised by the proxy
                     npc.PropertyChanged += (sender, e) =>
                     {
+                        DidTriggerChangeNotification = true;
                         Debug.WriteLine($"Property {e.PropertyName} has been changed");
                     };
                 }
@@ -41,18 +44,29 @@ namespace EfCoreExamples.ChangeNotification.Implicit
                 context.SimplePersons.Add(entity);
                 context.SaveChanges();
             }
-            Assert.Pass();
+            Assert.IsTrue(DidTriggerChangeNotification);
         }
         [Test]
-        public void TestWithoutProxies()
+        public void TestWithProxiesAndExplicitImplementationWithEventTrigger()
         {
-            using (var context = new ContextWithImplicitChangeNotifications())
+            bool DidTriggerChangeNotification = false;
+            using (var context = new ContextWithExplicitChangeNotifications())
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                SimplePerson entity = new SimplePerson();
+                SimplePersonWithNotificationTrigger entity = new SimplePersonWithNotificationTrigger();
 
-                Assert.IsTrue(typeof(INotifyPropertyChanged).IsAssignableFrom(entity.GetType()));
+                if (entity is INotifyPropertyChanged npc)
+                {
+                    Assert.IsTrue(typeof(INotifyPropertyChanged).IsAssignableFrom(npc.GetType()));
+
+                    //this will not trigger because the event is not raised by the proxy
+                    npc.PropertyChanged += (sender, e) =>
+                    {
+                        DidTriggerChangeNotification = true;
+                        Debug.WriteLine($"Property {e.PropertyName} has been changed");
+                    };
+                }
 
                 entity.Name = "John";
                 entity.LastName = "Doe";
@@ -61,10 +75,10 @@ namespace EfCoreExamples.ChangeNotification.Implicit
 
                 entity.Name = "Peter"; // "Property Name has been changed
 
-                context.SimplePersons.Add(entity);
+                context.SimplePersonsWithNotificationTrigger.Add(entity);
                 context.SaveChanges();
             }
-            Assert.Pass();
+            Assert.IsTrue(DidTriggerChangeNotification);
         }
     }
 }
