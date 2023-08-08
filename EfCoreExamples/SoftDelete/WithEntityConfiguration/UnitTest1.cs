@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace EfCoreExamples.SoftDelete.WithEntityConfiguration
 {
     public class Tests
@@ -16,6 +18,7 @@ namespace EfCoreExamples.SoftDelete.WithEntityConfiguration
                 context.Database.EnsureCreated();
                 SimplePerson entity = new SimplePerson { Name = "John", LastName = "Doe" };
                 context.SimplePersons.Add(entity);
+                context.SimplePersons.TagWith(tag: "Inserting entity");
                 context.SaveChanges();
                 context.Remove(entity);
                 context.SaveChanges();
